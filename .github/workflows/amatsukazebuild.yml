@@ -1,0 +1,106 @@
+name: Amatsukaze
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  Ut_Video_Codec_Suite_build:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout utvideo
+        uses: actions/checkout@v2
+        with:
+          repository: umezawatakeshi/utvideo
+          path: utvideo
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Vcpkg
+        run: |
+          vcpkg install ffmpeg:x64-windows
+          vcpkg install lz4:x64-windows-static
+          vcpkg install boost-test:x64-windows
+          vcpkg integrate install
+
+      - name: MSBuild
+        run: |
+          MSBuild utvideo/utvideo.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+      
+      - name: save build data
+        uses: actions/upload-artifact@v2
+        with:
+          name: utvideo
+          path: utvideo/x64/Release
+
+  AvisynthNeo_build:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout utvideo
+        uses: actions/checkout@v2
+        with:
+          repository: nekopanda/AviSynthPlus
+          path: AviSynthPlus
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Cmake Build
+        run: |
+          cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -HAviSynthPlus -BAviSynthPlus/build -G "Visual Studio 17 2022" -T host=x64 -A x64
+          cmake --build AviSynthPlus/build --config Release --target ALL_BUILD
+
+      - name: save build data
+        uses: actions/upload-artifact@v2
+        with:
+          name: AvisynthNeo
+          path: AviSynthPlus/build/avs_core/Release
+
+  Amatsukaze_build:
+    needs:
+      - Ut_Video_Codec_Suite_build
+      - AvisynthNeo_build
+    runs-on: windows-2019
+    steps:
+      - name: Checkout Amatsukaze
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+          repository: nekopanda/Amatsukaze
+          path: Amatsukaze
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Vcpkg
+        run: |
+          vcpkg install opencv:x64-windows
+          vcpkg integrate install
+
+      - name: MSBuild googletest
+        run: |
+          MSBuild Amatsukaze/googletest/googletest/msvc/gtest-md.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+          mkdir Amatsukaze/lib/x64
+          cp Amatsukaze/googletest/googletest/msvc/x64/Release/gtest.lib Amatsukaze/lib/x64/
+      
+      - name: Download ffmpeg
+        run: |
+          Invoke-WebRequest -Uri https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip -OutFile ffmpeg-master-latest-win64-gpl-shared.zip
+          Expand-Archive ffmpeg-master-latest-win64-gpl-shared.zip
+          cp ffmpeg-master-latest-win64-gpl-shared/lib/* Amatsukaze/lib/x64/
+      
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v2
+
+      - name: Amatsukaze build
+        run: |
+          cp utvideo/utv_core.lib Amatsukaze/lib/x64/
+          cp AvisynthNeo/AviSynth.lib Amatsukaze/lib/x64/
+          MSBuild Amatsukaze/Amatsukaze.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+
+      - name: save build data
+        uses: actions/upload-artifact@v2
+        with:
+          name: Amatsukaze
+          path: Amatsukaze/x64/Release 

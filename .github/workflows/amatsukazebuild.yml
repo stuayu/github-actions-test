@@ -20,11 +20,6 @@ jobs:
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10
-        with:
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          vcpkgGitCommitId: '${{ matrix.vcpkgCommitId }}'
-          vcpkgJsonGlob: '**/vcpkg.json'
-          runVcpkgInstall: true
 
       - name: Vcpkg
         run: |
@@ -91,11 +86,6 @@ jobs:
       
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10
-        with:
-          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          vcpkgGitCommitId: '${{ matrix.vcpkgCommitId }}'
-          vcpkgJsonGlob: '**/vcpkg.json'
-          runVcpkgInstall: true
 
       - name: Vcpkg
         run: |

@@ -18,7 +18,7 @@ jobs:
 
       - name: Vcpkg
         run: |
-          vcpkg install ffmpeg:x64-windows
+          vcpkg install ffmpeg[all-nonfree]:x64-windows
           vcpkg install lz4:x64-windows-static
           vcpkg install boost-test:x64-windows
           vcpkg integrate install
@@ -36,7 +36,7 @@ jobs:
   AvisynthNeo_build:
     runs-on: windows-2019
     steps:
-      - name: Checkout utvideo
+      - name: Checkout AvisynthNeo
         uses: actions/checkout@v2
         with:
           repository: nekopanda/AviSynthPlus
@@ -47,7 +47,7 @@ jobs:
 
       - name: Cmake Build
         run: |
-          cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -HAviSynthPlus -BAviSynthPlus/build -G "Visual Studio 17 2022" -T host=x64 -A x64
+          cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -HAviSynthPlus -BAviSynthPlus/build -G "Visual Studio 16 2019" -T host=x64 -A x64
           cmake --build AviSynthPlus/build --config Release --target ALL_BUILD
 
       - name: save build data

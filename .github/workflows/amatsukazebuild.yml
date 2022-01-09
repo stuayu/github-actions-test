@@ -45,6 +45,11 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
+      - name: Vcpkg
+        run: |
+          vcpkg install cuda:x64-windows
+          vcpkg integrate install
+
       - name: Cmake Build
         run: |
           cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -HAviSynthPlus -BAviSynthPlus/build -G "Visual Studio 16 2019" -T host=x64 -A x64

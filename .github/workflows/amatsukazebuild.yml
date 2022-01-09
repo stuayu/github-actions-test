@@ -25,7 +25,7 @@ jobs:
 
       - name: MSBuild
         run: |
-          MSBuild utvideo/utvideo.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+          MSBuild utvideo/utvideo.sln /t:rebuild /p:Configuration=Release;Platform="x64"
       
       - name: save build data
         uses: actions/upload-artifact@v2
@@ -102,7 +102,7 @@ jobs:
         run: |
           cp utvideo/utv_core.lib Amatsukaze/lib/x64/
           cp AvisynthNeo/AviSynth.lib Amatsukaze/lib/x64/
-          MSBuild Amatsukaze/Amatsukaze.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release;Platform="x64"
 
       - name: save build data
         uses: actions/upload-artifact@v2

@@ -3,9 +3,6 @@ name: Amatsukaze
 on: 
   workflow_dispatch:
 
-env:
-  cache-version: v1
-
 jobs:
   Ut_Video_Codec_Suite_build:
     runs-on: windows-2019
@@ -19,14 +16,12 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Vcpkg cache
-        uses: actions/cache@v2
+      - uses: lukka/get-cmake@latest
+
+      - name: Restore artifacts, or setup vcpkg (do not install any package)
+        uses: lukka/run-vcpkg@v10
         with:
-          path: | 
-            C:\Users\runneradmin\AppData\Local\vcpkg\archives 
-          key: utvideo-${{ runner.os }}-${{ env.cache-version }}
-          restore-keys: |
-            utvideo-${{ runner.os }}
+          runVcpkgInstall: true
 
       - name: Vcpkg
         run: |
@@ -37,7 +32,7 @@ jobs:
 
       - name: MSBuild
         run: |
-          MSBuild utvideo/utvideo.sln /t:rebuild /p:Configuration=Release;Platform="x64"
+          MSBuild utvideo/utvideo.sln /t:rebuild /p:Configuration=Release /p:Platform=x64
       
       - name: save build data
         uses: actions/upload-artifact@v2
@@ -89,14 +84,12 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Vcpkg cache
-        uses: actions/cache@v2
+      - uses: lukka/get-cmake@latest
+      
+      - name: Restore artifacts, or setup vcpkg (do not install any package)
+        uses: lukka/run-vcpkg@v10
         with:
-          path: | 
-            C:\Users\runneradmin\AppData\Local\vcpkg\archives 
-          key: amatsukaze-${{ runner.os }}-${{ env.cache-version }}
-          restore-keys: |
-            amatsukaze-${{ runner.os }}
+          runVcpkgInstall: true
 
       - name: Vcpkg
         run: |
@@ -105,7 +98,7 @@ jobs:
 
       - name: MSBuild googletest
         run: |
-          MSBuild Amatsukaze/googletest/googletest/msvc/gtest-md.sln /t:clean;rebuild /p:Configuration=Release;Platform="x64"
+          MSBuild Amatsukaze/googletest/googletest/msvc/gtest-md.sln /t:rebuild /p:Configuration=Release /p:Platform=x64
           mkdir Amatsukaze/lib/x64
           cp Amatsukaze/googletest/googletest/msvc/x64/Release/gtest.lib Amatsukaze/lib/x64/
       
@@ -122,7 +115,7 @@ jobs:
         run: |
           cp utvideo/utv_core.lib Amatsukaze/lib/x64/
           cp AvisynthNeo/AviSynth.lib Amatsukaze/lib/x64/
-          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release;Platform="x64"
+          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64
 
       - name: save build data
         uses: actions/upload-artifact@v2

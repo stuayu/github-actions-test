@@ -16,6 +16,13 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
+      - name: Vcpkg cache
+        uses: actions/cache@v2
+        with:
+          path: | 
+            ~/AppData/Local/vcpkg/archives 
+          key: ${{ runner.os }}
+          
       - name: Vcpkg
         run: |
           vcpkg install ffmpeg[all-nonfree]:x64-windows

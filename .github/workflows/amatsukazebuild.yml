@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: | 
-            %LOCALAPPDATA%/vcpkg/archives 
+            C:\Users\runneradmin\AppData\Local\vcpkg\archives 
           key: utvideo-${{ runner.os }}-${{ env.cache-version }}
           restore-keys: |
             utvideo-${{ runner.os }}
@@ -56,20 +56,10 @@ jobs:
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-      
-      - name: Vcpkg cache
-        uses: actions/cache@v2
-        with:
-          path: | 
-            %LOCALAPPDATA%/vcpkg/archives 
-          key: avisynthneo-${{ runner.os }}-${{ env.cache-version }}
-          restore-keys: |
-            avisynthneo-${{ runner.os }}
 
-      - name: Vcpkg
+      - name: Install CUDA
         run: |
-          vcpkg install cuda:x64-windows
-          vcpkg integrate install
+          choco install cuda -y
 
       - name: Cmake Build
         run: |
@@ -103,7 +93,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: | 
-            %LOCALAPPDATA%/vcpkg/archives 
+            C:\Users\runneradmin\AppData\Local\vcpkg\archives 
           key: amatsukaze-${{ runner.os }}-${{ env.cache-version }}
           restore-keys: |
             amatsukaze-${{ runner.os }}

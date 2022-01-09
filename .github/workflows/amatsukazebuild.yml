@@ -23,10 +23,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: | 
-            ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}-${{ env.cache-version }}
+            %LOCALAPPDATA%/vcpkg/archives 
+          key: utvideo-${{ runner.os }}-${{ env.cache-version }}
           restore-keys: |
-            ${{ runner.os }}
+            utvideo-${{ runner.os }}
 
       - name: Vcpkg
         run: |
@@ -61,10 +61,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: | 
-            ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}-${{ env.cache-version }}
+            %LOCALAPPDATA%/vcpkg/archives 
+          key: avisynthneo-${{ runner.os }}-${{ env.cache-version }}
           restore-keys: |
-            ${{ runner.os }}
+            avisynthneo-${{ runner.os }}
 
       - name: Vcpkg
         run: |
@@ -103,10 +103,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: | 
-            ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}-${{ env.cache-version }}
+            %LOCALAPPDATA%/vcpkg/archives 
+          key: amatsukaze-${{ runner.os }}-${{ env.cache-version }}
           restore-keys: |
-            ${{ runner.os }}
+            amatsukaze-${{ runner.os }}
 
       - name: Vcpkg
         run: |

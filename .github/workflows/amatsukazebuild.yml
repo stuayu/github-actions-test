@@ -3,6 +3,9 @@ name: Amatsukaze
 on: 
   workflow_dispatch:
 
+env:
+  cache-version: v1
+
 jobs:
   Ut_Video_Codec_Suite_build:
     runs-on: windows-2019
@@ -21,8 +24,10 @@ jobs:
         with:
           path: | 
             ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}
-          
+          key: ${{ runner.os }}-${{ env.cache-version }}
+          restore-keys: |
+            ${{ runner.os }}
+
       - name: Vcpkg
         run: |
           vcpkg install ffmpeg[all-nonfree]:x64-windows
@@ -57,7 +62,9 @@ jobs:
         with:
           path: | 
             ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}
+          key: ${{ runner.os }}-${{ env.cache-version }}
+          restore-keys: |
+            ${{ runner.os }}
 
       - name: Vcpkg
         run: |
@@ -97,7 +104,9 @@ jobs:
         with:
           path: | 
             ~/AppData/Local/vcpkg/archives 
-          key: ${{ runner.os }}
+          key: ${{ runner.os }}-${{ env.cache-version }}
+          restore-keys: |
+            ${{ runner.os }}
 
       - name: Vcpkg
         run: |

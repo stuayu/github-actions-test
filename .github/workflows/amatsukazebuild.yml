@@ -55,6 +55,7 @@ jobs:
       - name: Install CUDA
         run: |
           choco install cuda -y
+          refreshenv
 
       - name: Cmake Build
         run: |

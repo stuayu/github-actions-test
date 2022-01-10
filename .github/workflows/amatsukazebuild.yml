@@ -51,7 +51,7 @@ jobs:
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-        
+
       - name: Cmake Build
         shell: pwsh
         run: |
@@ -83,6 +83,12 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
+      - name: Restore artifacts, or setup vcpkg (do not install any package)
+        uses: lukka/run-vcpkg@v10
+        with:
+          vcpkgGitCommitId: 03ca9b59af1506a86840e3a3a01a092f3333a29b
+          appendedCacheKey: amatsukaze
+          
       - name: Vcpkg
         run: |
           vcpkg install opencv:x64-windows

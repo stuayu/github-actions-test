@@ -51,11 +51,7 @@ jobs:
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-
-      - name: Install CUDA
-        run: |
-          choco install cuda -y
-
+        
       - name: Cmake Build
         shell: pwsh
         run: |
@@ -82,17 +78,10 @@ jobs:
           submodules: true
           repository: stuayu/Amatsukaze-origin
           path: Amatsukaze
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-
-      - uses: lukka/get-cmake@latest
-      
-      - name: Restore artifacts, or setup vcpkg (do not install any package)
-        uses: lukka/run-vcpkg@v10
-        with:
-          vcpkgGitCommitId: 03ca9b59af1506a86840e3a3a01a092f3333a29b
 
       - name: Vcpkg
         run: |

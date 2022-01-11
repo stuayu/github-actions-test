@@ -116,7 +116,7 @@ jobs:
           cp utvideo/utv_core.lib Amatsukaze/lib/x64/
           cp AvisynthNeo/AviSynth.lib Amatsukaze/lib/x64/
           nuget restore Amatsukaze/Amatsukaze.sln
-          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142
+          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142 /t:TransformAll
 
       - name: save build data
         uses: actions/upload-artifact@v2

@@ -87,7 +87,7 @@ jobs:
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10
         with:
-          vcpkgGitCommitId: 5edd518dc320c4802d2db7ca7765c66c4235e023
+          vcpkgGitCommitId: 9f04533f307a8560cc1cc5c1fdee0d88d6d7d818
           appendedCacheKey: amatsukaze
 
       - name: Vcpkg
@@ -97,7 +97,6 @@ jobs:
 
       - name: MSBuild googletest
         run: |
-          git submodule foreach git pull origin master
           MSBuild Amatsukaze/googletest/googletest/msvc/gtest-md.sln /t:rebuild /p:Configuration=Release /p:Platform=x64
           mkdir Amatsukaze/lib/x64
           cp Amatsukaze/googletest/googletest/msvc/x64/Release/gtest.lib Amatsukaze/lib/x64/
@@ -115,7 +114,8 @@ jobs:
         run: |
           cp utvideo/utv_core.lib Amatsukaze/lib/x64/
           cp AvisynthNeo/AviSynth.lib Amatsukaze/lib/x64/
-          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v120 /p:RestorePackagesConfig=true
+          nuget restore Amatsukaze/Amatsukaze.sln
+          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142
 
       - name: save build data
         uses: actions/upload-artifact@v2

@@ -93,6 +93,7 @@ jobs:
       - name: Vcpkg
         run: |
           vcpkg install opencv:x64-windows
+          vcpkg install openssl:x64-windows
           vcpkg integrate install
 
       - name: MSBuild googletest

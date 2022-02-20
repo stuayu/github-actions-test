@@ -70,7 +70,7 @@ jobs:
     needs:
       - Ut_Video_Codec_Suite_build
       - AvisynthNeo_build
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout Amatsukaze
         uses: actions/checkout@v2
@@ -116,7 +116,7 @@ jobs:
           cp utvideo/* Amatsukaze/lib/x64/
           cp AvisynthNeo/* Amatsukaze/lib/x64/
           nuget restore Amatsukaze/Amatsukaze.sln
-          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v142
+          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
 
       - name: save build data
         uses: actions/upload-artifact@v2

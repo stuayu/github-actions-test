@@ -86,7 +86,7 @@ jobs:
 
       # nuget のセットアップをする
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@latest
+        uses: NuGet/setup-nuget@v1
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10

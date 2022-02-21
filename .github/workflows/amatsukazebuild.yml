@@ -82,7 +82,11 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild
+
+      # nuget のセットアップをする
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10
@@ -115,8 +119,8 @@ jobs:
         run: |
           cp utvideo/* Amatsukaze/lib/x64/
           cp AvisynthNeo/* Amatsukaze/lib/x64/
-          nuget restore Amatsukaze/Amatsukaze.sln
-          MSBuild Amatsukaze/Amatsukaze.sln /t:rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
+          MSBuild Amatsukaze/Amatsukaze.sln /t:Restore /p:Configuration=Release
+          MSBuild Amatsukaze/Amatsukaze.sln /t:Rebuild /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
 
       - name: save build data
         uses: actions/upload-artifact@v2

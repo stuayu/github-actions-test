@@ -82,11 +82,11 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
 
       # nuget のセットアップをする
       - name: Setup NuGet
-        uses: NuGet/setup-nuget
+        uses: NuGet/setup-nuget@latest
 
       - name: Restore artifacts, or setup vcpkg (do not install any package)
         uses: lukka/run-vcpkg@v10

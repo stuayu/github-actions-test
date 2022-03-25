@@ -1,0 +1,31 @@
+name: FFmpeg
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ffmpeg_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ffmpeg
+        uses: actions/checkout@v2
+        with:
+          repository: rdp/ffmpeg-windows-build-helpers
+          path: ffmpeg
+      
+      - name: build ffmpeg
+        run: ffmpeg/cross_compile_ffmpeg.sh \
+              --build-ffmpeg-static=y \
+              --build-ffmpeg-shared=y \
+              --build-intel-qsv=y  \
+              --build-amd-amf=y \
+              --disable-nonfree=n \
+              --ffmpeg-git-checkout-version=n5.0 < 3
+
+      - name: save build data
+        uses: actions/upload-artifact@v2
+        with:
+          name: ffmpeg
+          path: ffmpeg/
+
+  

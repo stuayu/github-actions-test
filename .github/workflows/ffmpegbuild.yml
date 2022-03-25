@@ -26,7 +26,8 @@ jobs:
           --build-intel-qsv=y  \
           --build-amd-amf=y \
           --disable-nonfree=n \
-          --ffmpeg-git-checkout-version=n5.0 < 3
+          --ffmpeg-git-checkout-version=n5.0 \
+          --compiler-flavors=win64
 
       - name: save build data
         uses: actions/upload-artifact@v2

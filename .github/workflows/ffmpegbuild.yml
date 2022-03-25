@@ -13,6 +13,10 @@ jobs:
           repository: rdp/ffmpeg-windows-build-helpers
           path: ffmpeg
       
+      - name: update packages
+        run: apt-get update && \
+              apt-get install subversion ragel curl texinfo g++ ed bison flex cvs yasm automake libtool autoconf gcc cmake git make pkg-config zlib1g-dev unzip pax nasm gperf autogen bzip2 autoconf-archive p7zip-full meson clang python3-distutils python-is-python3 -y
+      
       - name: build ffmpeg
         run: ffmpeg/cross_compile_ffmpeg.sh \
               --build-ffmpeg-static=y \

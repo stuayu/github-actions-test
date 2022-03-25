@@ -30,10 +30,27 @@ jobs:
           --ffmpeg-git-checkout-version=n5.0 \
           --compiler-flavors=win64
 
-      - name: save build data
+      - name: save build data1
         uses: actions/upload-artifact@v2
         with:
-          name: ffmpeg
-          path: ffmpeg/
+          name: ffmpeg_win64_static
+          path: ffmpeg/sandbox/win64/ffmpeg*n5.0
 
+      - name: save build data2
+        uses: actions/upload-artifact@v2
+        with:
+          name: ffmpeg_win64_shared
+          path: ffmpeg/sandbox/win64/ffmpeg*n5.0_shared
+
+      - name: save build data3
+        uses: actions/upload-artifact@v2
+        with:
+          name: x264
+          path: ffmpeg/sandbox/win64/x264*
+      
+      - name: save build data4
+        uses: actions/upload-artifact@v2
+        with:
+          name: x264
+          path: ffmpeg/sandbox/win64/x265*
   

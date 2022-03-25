@@ -14,17 +14,19 @@ jobs:
           path: ffmpeg
       
       - name: update packages
-        run: apt-get update && \
-              apt-get install subversion ragel curl texinfo g++ ed bison flex cvs yasm automake libtool autoconf gcc cmake git make pkg-config zlib1g-dev unzip pax nasm gperf autogen bzip2 autoconf-archive p7zip-full meson clang python3-distutils python-is-python3 -y
+        run: | 
+          sudo apt-get update && \
+          sudo apt-get install subversion ragel curl texinfo g++ ed bison flex cvs yasm automake libtool autoconf gcc cmake git make pkg-config zlib1g-dev unzip pax nasm gperf autogen bzip2 autoconf-archive p7zip-full meson clang python3-distutils python-is-python3 -y
       
       - name: build ffmpeg
-        run: ffmpeg/cross_compile_ffmpeg.sh \
-              --build-ffmpeg-static=y \
-              --build-ffmpeg-shared=y \
-              --build-intel-qsv=y  \
-              --build-amd-amf=y \
-              --disable-nonfree=n \
-              --ffmpeg-git-checkout-version=n5.0
+        run: |
+          ffmpeg/cross_compile_ffmpeg.sh \
+          --build-ffmpeg-static=y \
+          --build-ffmpeg-shared=y \
+          --build-intel-qsv=y  \
+          --build-amd-amf=y \
+          --disable-nonfree=n \
+          --ffmpeg-git-checkout-version=n5.0
 
       - name: save build data
         uses: actions/upload-artifact@v2

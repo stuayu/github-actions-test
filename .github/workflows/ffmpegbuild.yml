@@ -27,14 +27,14 @@ jobs:
           --build-intel-qsv=y  \
           --build-amd-amf=y \
           --disable-nonfree=n \
-          --ffmpeg-git-checkout-version=n5.0 \
+          --ffmpeg-git-checkout-version=master \
           --compiler-flavors=win64
 
       - name: archive 7zip
         working-directory: ./ffmpeg/sandbox/win64
         run: |
-          7z a ffmpeg_win64_static.7z ffmpeg*n5.0 && \
-          7z a ffmpeg_win64_shared.7z ffmpeg*n5.0_shared && \
+          7z a ffmpeg_win64_static.7z ffmpeg*master && \
+          7z a ffmpeg_win64_shared.7z ffmpeg*master_shared && \
           7z a x264.7z x264* && \
           7z a x265.7z x265*
 

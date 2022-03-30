@@ -30,27 +30,35 @@ jobs:
           --ffmpeg-git-checkout-version=n5.0 \
           --compiler-flavors=win64
 
+      - name: archive 7zip
+        working-directory: ./ffmpeg/sandbox/win64
+        run: |
+          7z a ffmpeg_win64_static.7z ffmpeg*n5.0 && \
+          7z a ffmpeg_win64_shared.7z ffmpeg*n5.0_shared && \
+          7z a x264.7z x264* && \
+          7z a x265.7z x265*
+
       - name: save build data1
         uses: actions/upload-artifact@v2
         with:
           name: ffmpeg_win64_static
-          path: ffmpeg/sandbox/win64/ffmpeg*n5.0
+          path: ffmpeg/sandbox/win64/ffmpeg_win64_static.7z
 
       - name: save build data2
         uses: actions/upload-artifact@v2
         with:
           name: ffmpeg_win64_shared
-          path: ffmpeg/sandbox/win64/ffmpeg*n5.0_shared
+          path: ffmpeg/sandbox/win64/ffmpeg_win64_shared.7z
 
       - name: save build data3
         uses: actions/upload-artifact@v2
         with:
           name: x264
-          path: ffmpeg/sandbox/win64/x264*
+          path: ffmpeg/sandbox/win64/x264.7z
       
       - name: save build data4
         uses: actions/upload-artifact@v2
         with:
           name: x264
-          path: ffmpeg/sandbox/win64/x265*
+          path: ffmpeg/sandbox/win64/x265.7z
   

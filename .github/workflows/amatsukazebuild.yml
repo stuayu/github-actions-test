@@ -113,7 +113,7 @@ jobs:
           cp ffmpeg-master-latest-win64-gpl-shared/ffmpeg-master-latest-win64-gpl-shared/lib/* Amatsukaze/lib/x64/
 
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
 
       - name: Amatsukaze build
         run: |
